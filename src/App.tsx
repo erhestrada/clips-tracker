@@ -1,34 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { clientId, authToken } from './config.tsx';
+
+async function getTopClips(clientId: string, authToken: string) {
+  try {
+    const response = await fetch("https://api.twitch.tv/helix/clips?game_id=509658&started_at=2024-10-03T16:36:58Z&ended_at=2024-10-04T16:36:58Z&is_featured=true", {
+      method: 'GET',
+      headers: {
+        'Client-Id': clientId,
+        'Authorization': 'Bearer ' + authToken
+      }
+    });
+    const data = await response.json();
+    console.log(data); // Return data here
+    return data; // or do something with it
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  getTopClips(clientId, authToken)
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <h1>HELLO</h1>
   )
 }
 
